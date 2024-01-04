@@ -7,9 +7,9 @@
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Rizeng Chen 陈日增"
+title                    : "Rizeng Chen's Homepage 陈日增"
 title_separator          : "-"
-name                     : &name "Your Name"
+name                     : &name "Rizeng Chen"
 description              : &description "Rizeng Chen"
 url                      : https://xiaxueqaq.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
@@ -80,7 +80,7 @@ analytics:
 
 # Site Author
 author:
-  name             : "Rizeng Chen"
+  name             : "Rizeng Chen (陈 日增)"
   avatar           : "profile.png"
   bio              : "Better to run than curse the road"
   location         : "Beijing, China"
