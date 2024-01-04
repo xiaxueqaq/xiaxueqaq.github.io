@@ -1,6 +1,6 @@
 ---
 permalink: /
-title: "academicpages is a ready-to-fork GitHub Pages template for academic personal websites"
+title: "About me"
 excerpt: "About me"
 author_profile: true
 redirect_from: 
@@ -8,6 +8,10 @@ redirect_from:
   - /about.html
 ---
 
-I am a third-year PhD candidate in Mathematics at Peking University. My advisor is [Bican Xia](https://www.math.pku.edu.cn/teachers/xiabc/html/index_en.html). I obtained my bachelor's degree from Hua Loo-Keng honorary class, School of Mathematical Sciences, Beihang University (BUAA). My research interests includes computational algebraic geometry, cylindrical algebraic decomposition, symbolic computation and computability.
+I am a third-year PhD candidate in Mathematics at Peking University (PKU). My advisor is [Bican Xia](https://www.math.pku.edu.cn/teachers/xiabc/html/index_en.html). 
+
+I obtained my bachelor's degree from Hua Loo-Keng honorary class, School of Mathematical Sciences, Beihang University (BUAA). 
+
+My research interests includes computational algebraic geometry, cylindrical algebraic decomposition, symbolic computation and computability.
 
 You can find my CV [here](../assets/CV.pdf).
