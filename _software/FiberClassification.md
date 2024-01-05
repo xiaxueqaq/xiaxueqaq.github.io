@@ -24,7 +24,9 @@ This project provides an algorithm to classify geometric fibers by their cardina
 - Infinitely many solutions in $y,z$ when $x^4\ne 0$,
 - 1 solution in $y,z$ when $x=0$.
 
+
 Check it out: 
 <a href="https://github.com/xiaxueqaq/Fiber-Classification" target="_blank">
     <button style="background-color: white; color: black;">GitHub</button>
 </a>
+
