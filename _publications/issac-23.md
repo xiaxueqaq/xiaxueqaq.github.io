@@ -2,9 +2,9 @@
 title: "Deciding first-order formulas involving univariate mixed trigonometric-polynomials"
 collection: publications
 permalink: /publication/issac-23
-excerpt: 'This paper is about the first-order theory of univariate mixed trigonometric-polynomials.'
+excerpt: 'This paper is about the first-order theory of univariate mixed trigonometric-polynomials. We showed that this theory is surprisingly unconditionally decidable.'
 date: 2023-07-24
-venue: 'International Symposium on Symbolic and Algebraic Computation 2023'
+venue: 'International Symposium on Symbolic and Algebraic Computation'
 citation: 'Chen, R., & Xia, B. (2023, July). Deciding first-order formulas involving univariate mixed trigonometric-polynomials. In Proceedings of the 2023 International Symposium on Symbolic and Algebraic Computation (pp. 145-154).'
 ---
 
