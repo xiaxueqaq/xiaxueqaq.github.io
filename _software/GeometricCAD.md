@@ -1,0 +1,12 @@
+---
+title: "Geometric Cylindrical Algebraic Decomposition"
+collection: software
+permalink: /software/GeometricCAD
+excerpt: 'This is the package providing Geometric CAD in our paper.'
+language: 'Mathematica'
+date: 2024-03-01
+---
+
+<a href="https://github.com/xiaxueqaq/GeometricCAD" target="_blank">
+    <button style="background-color: white; color: black;">GitHub</button>
+</a>
