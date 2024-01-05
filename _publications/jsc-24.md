@@ -8,6 +8,7 @@ venue: 'Journal of Symbolic Computation'
 citation: 'Chen, R., Li, H., Xia, B., Zhao, T., & Zheng, T. (2024). Isolating all the real roots of a mixed trigonometric-polynomial. Journal of Symbolic Computation, 121, 102250.'
 ---
 
-{% include button.html url="https://www.sciencedirect.com/science/article/abs/pii/S0747717123000640" %}
+
+<button name="button" onclick="https://www.sciencedirect.com/science/article/abs/pii/S0747717123000640">PDF</button>
 
 <!---------------------------------------------------------------------------->
