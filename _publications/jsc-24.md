@@ -10,8 +10,8 @@ citation: 'Chen, R., Li, H., Xia, B., Zhao, T., & Zheng, T. (2024). Isolating al
 ---
 
 
-<br>
+[<kbd> <br> PDF <br> </kbd>][PDFLink]
 
-[<kbd> <br> PDF <br> </kbd>][https://www.sciencedirect.com/science/article/abs/pii/S0747717123000640]
+<!---------------------------------------------------------------------------->
 
-<br>
+[PDFLink]: https://www.sciencedirect.com/science/article/abs/pii/S0747717123000640
