@@ -4,7 +4,7 @@ collection: software
 permalink: /software/GeometricCAD
 excerpt: 'This is the package providing Geometric CAD in our paper.'
 language: 'Mathematica'
-date: 2024-03-01
+date: 2023-11-17
 ---
 
 <a href="https://github.com/xiaxueqaq/GeometricCAD" target="_blank">
