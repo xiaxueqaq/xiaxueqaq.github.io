@@ -2,7 +2,7 @@
 title: "Geometric Cylindrical Algebraic Decomposition"
 collection: software
 permalink: /software/GeometricCAD
-excerpt: 'This is the package providing Geometric CAD in our paper.'
+excerpt: 'Language: Mathematica <br>This is the package providing Geometric CAD in our paper.'
 language: 'Mathematica'
 date: 2023-11-17
 ---
