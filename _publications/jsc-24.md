@@ -10,12 +10,6 @@ citation: 'Chen, R., Li, H., Xia, B., Zhao, T., & Zheng, T. (2024). Isolating al
 
 <a href="https://www.sciencedirect.com/science/article/abs/pii/S0747717123000640" target="_blank">
     <button style="background-color: white; color: black;">PDF</button>
-</a>&nbsp;
-<a href="assets/issac23-slides.pdf" target="_blank">
-    <button style="background-color: white; color: black;">Slides</button>
-</a>&nbsp;
-<a href="https://github.com/xiaxueqaq/MTP-decision" target="_blank">
-    <button style="background-color: white; color: black;">Code</button>
-</a> 
+</a>
 
 <!---------------------------------------------------------------------------->
