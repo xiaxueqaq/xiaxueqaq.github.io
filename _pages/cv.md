@@ -1,11 +1,14 @@
 ---
-layout: redirected
+layout: archive
 title: "CV"
 permalink: /cv/
-nav: true
-nav_order: 4
 author_profile: true
 redirect_from:
   - /resume
-redirect_to: /assets/CV_Chen.pdf
 ---
+
+{% include base_path %}
+
+Download my CV [here](../assets/CV.pdf).
+
+<embed src="../assets/CV.pdf" type="application/pdf" width="100%" height="600px" />
