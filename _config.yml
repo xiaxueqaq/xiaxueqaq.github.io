@@ -83,7 +83,7 @@ author:
   name             : "Rizeng Chen (陈 日增)"
   avatar           : "issac23-selfie.png"
   bio              : "The photo was taken in Tromsø, Norway before I delivered my first public talk in ISSAC'23"
-  location         : "324, Building 21, Peking University, Beijing, China"
+  location         : '324, Building 21, Peking University,\nBeijing, China'
   employer         :
   pubmed           : #"https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
   googlescholar    : #"http://yourfullgooglescholarurl.com"
