@@ -8,7 +8,7 @@ date: 2024-02-29
 location: "Beijing, China"
 ---
 
-I served as a Teaching Assistant for Advanced Algebra II taught by Prof. Fuzheng Wang in the 2024 Spring semester. I graded exercises and exam papers and I also taught a series of lessons on advanced algebra problem solving.
+I am serving as a Teaching Assistant for Advanced Algebra II taught by Prof. Fuzheng Wang in the 2024 Spring semester. I grade exercises and exam papers and I also teach a series of lessons on advanced algebra problem solving.
 
  # Information about the lessons on problem solving (习题课信息)
 
