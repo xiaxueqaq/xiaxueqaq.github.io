@@ -20,7 +20,7 @@ Location: 204, the scientific teaching building (理教204)
 
 Time: 18:40-20:30, Thursday on the even weeks (双周周四晚18：40-20：30)
 
-Material: [Lecture notes (自编讲义)](https://github.com/xiaxueqaq/Advanced_Algebra_II_notes)
+Material: [Lecture notes (自编讲义)](../files/Lecture_Notes(2024).pdf)
 
 Please hand in your homework in **paper form** before the class begins / 请在课前提交**纸质版**作业
 
