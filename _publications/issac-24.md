@@ -5,7 +5,7 @@ permalink: /publication/issac-24
 excerpt: 'This paper shows that reduction can be widely performed in a class of problems called "Trigonometric Extension".'
 date: 2024-07-16
 venue: 'International Symposium on Symbolic and Algebraic Computation'
-citation: 'Chen, R., & Xia, B. (2024, July). Reduction of Transcendental Decision Problems over the Reals. In Proceedings of the 2024 International Symposium on Symbolic and Algebraic Computation (Accepted).'
+citation: 'Chen, R., & Xia, B. (2024, July). Reduction of Transcendental Decision Problems over the Reals. In Proceedings of the 2024 International Symposium on Symbolic and Algebraic Computation (pp. 56-64).'
 ---
 
 <embed src="../assets/issac24-slides.pdf" type="application/pdf" width="100%" height="50px" />
