@@ -8,7 +8,7 @@ date: 2025-02-14
 location: "Beijing, China"
 ---
 
-I am serving as a Teaching Assistant for Advanced Algebra II taught by Xia Gao in the 2025 Spring semester. I grade exercises and exam papers and I also teach a series of lessons on advanced algebra problem solving.
+I am serving as a Teaching Assistant for Advanced Algebra II taught by Dr. Xia Gao in the 2025 Spring semester. I grade exercises and exam papers and I also teach a series of lessons on advanced algebra problem solving.
 
 Ratio / 分数比例: 
 
