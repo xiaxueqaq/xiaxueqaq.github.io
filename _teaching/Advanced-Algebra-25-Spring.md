@@ -14,7 +14,7 @@ Ratio / 分数比例:
 
 Homework : Midterm : Final (平时/期中/期末) = TBA (暂时不能给你明确的答复)
 
- # Information about the lessons on problem solving (习题课信息)
+ # Information about the exercise session (习题课信息)
 
 Location: Room 414, Second Teaching Building (二教414)
 
