@@ -20,7 +20,7 @@ Location: Room 414, Second Teaching Building (二教414)
 
 Time: 18:40-20:30, Thursday on the even weeks (双周周四晚18：40-20：30)
 
-Material: [Lecture notes (自编讲义)](../files/Lecture_Notes(2025).pdf)
+Material: [Lecture notes (自编讲义)](../files/Lecture_Notes (2025).pdf)
 
 Please hand in your homework in **paper form** before the class begins / 请在课前提交**纸质版**作业
 
