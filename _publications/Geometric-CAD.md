@@ -3,7 +3,7 @@ title: "A Geometric Approach to Cylindrical Algebraic Decomposition"
 collection: publications
 permalink: /publication/Geometric-CAD
 excerpt: 'This paper is about the geometry behind the cylindrical algebraic decomposition (CAD, a classical construction in real algebraic geometry). We show that this construction is related to studying finite free (flat) morphisms of real varieties and present a new algorithm for CAD.'
-date: 2023-11-17
+date: 2025-06-03
 venue: 'Mathematics of Computation'
 citation: 'Rizeng Chen, A Geometric Approach to Cylindrical Algebraic Decomposition, Math. Comp., electronically published on June 3, 2025, DOI: https://doi.org/10.1090/mcom/4099 (to appear in print).'
 ---
