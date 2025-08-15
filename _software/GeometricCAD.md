@@ -7,6 +7,6 @@ language: 'Mathematica'
 date: 2023-11-17
 ---
 
-<a href="https://github.com/xiaxueqaq/GeometricCAD" target="_blank">
+<a href="https://github.com/xiaxueqaq/GeometricCADv2" target="_blank">
     <button style="background-color: white; color: black;">GitHub</button>
 </a>
