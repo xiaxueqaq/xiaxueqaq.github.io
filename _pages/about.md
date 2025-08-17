@@ -15,7 +15,7 @@ I obtained my bachelor's degree from Hua Loo-Keng honorary class, School of Math
 
 My research interest includes computational algebraic geometry, real algebraic geometry, symbolic computation and theoretical computer science. 
 
-You may refer to [my recent paper](https://arxiv.org/abs/2311.10515) on a geometric approach to cylindrical algebraic decomposition to see my research interest in more details.
+You may refer to [my recent paper](https://arxiv.org/abs/2311.10515) on a new CAD algorithm to see my research interest in more details.
 
 
 I will be graduating in July 2026 and I am on the job market now. Right now I am looking for a post-doc position. Please [let me know](mailto:xiaxueqaq@stu.pku.edu.cn) if there are available fundings.
