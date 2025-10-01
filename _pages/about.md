@@ -17,7 +17,7 @@ My research interest lies in the intersection of
 
   1. Algebraic Geometry
   2. Mathematical Logic
-  3. Theorectical Computer Sciences
+  3. Theorectical Computer Science
 
 For example, given a semi-algebraic set / an algebraic variety $X$ (algebraic geometry), described by a logic formula (logic), I would like to know how can I decide whether $X$ is empty (TCS)?
 
