@@ -23,7 +23,7 @@ For example, given a semi-algebraic set / an algebraic variety $X$ (algebraic ge
 
 As another example, given a semi-algebraic set / an algebraic variety $X$, how can I compute its projection image in the low-dimensional space (Quantifier Elimination)? 
 
-You may refer to [my recent paper](https://arxiv.org/abs/2311.10515) on a new CAD algorithm to see my research interest in more details.
+You may refer to [my recent paper](https://arxiv.org/abs/2311.10515) on a new Cylindrical Algebraic Decomposition algorithm to see my research interest in more details.
 
 
 I will be graduating in July 2026 and I am on the job market now. Right now I am looking for a post-doc position. Please [let me know](mailto:xiaxueqaq@stu.pku.edu.cn) if there are available fundings.
