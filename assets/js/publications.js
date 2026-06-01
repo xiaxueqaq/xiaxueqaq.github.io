@@ -2,11 +2,10 @@ function groupPublications() {
     const container = document.querySelector('.publication-list');
     if (!container) return;
 
-    // 清空容器，但保留原始 article 列表
     const articles = Array.from(container.querySelectorAll('.publication-item'));
     if (articles.length === 0) return;
 
-    // 创建两个分组容器
+    // 创建分组容器
     const publishedGroup = document.createElement('div');
     publishedGroup.className = 'publication-group';
     publishedGroup.innerHTML = '<h2 class="section-title">📖 Published </h2><div class="group-items"></div>';
@@ -14,7 +13,6 @@ function groupPublications() {
     preprintGroup.className = 'publication-group';
     preprintGroup.innerHTML = '<h2 class="section-title">📄 Preprint </h2><div class="group-items"></div>';
 
-    // 清空原容器
     container.innerHTML = '';
 
     articles.forEach(article => {
@@ -24,19 +22,31 @@ function groupPublications() {
         targetGroup.querySelector('.group-items').appendChild(article);
     });
 
-    // 如果某组没有文章，可以不显示该组（可选）
     if (publishedGroup.querySelector('.group-items').children.length > 0) {
         container.appendChild(publishedGroup);
     }
     if (preprintGroup.querySelector('.group-items').children.length > 0) {
         container.appendChild(preprintGroup);
     }
+
+    // ⭐ 关键：重新编号
+    renumberPublications();
+}
+
+function renumberPublications() {
+    const items = document.querySelectorAll('.publication-item');
+    items.forEach((item, idx) => {
+        const numSpan = item.querySelector('.pub-number');
+        if (numSpan) numSpan.textContent = idx + 1;
+        item.setAttribute('data-index', idx);
+    });
 }
 
 // 在 DOMContentLoaded 中调用
 document.addEventListener('DOMContentLoaded', function() {
-    // 其他初始化...
-    groupPublications();
+    // ... 其他初始化
+    groupPublications();   // 这个内部会调用 renumberPublications
+    // 如果有其他动态操作，也要调用 renumberPublications
 });
 
 /**
