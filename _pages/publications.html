@@ -613,6 +613,32 @@ author_profile: true
 		        margin-bottom: 32px;
 		    }
 		}
+		/* 让顶部菜单背景与页面背景统一 */
+		#site-nav.greedy-nav {
+		    background-color: #f5f4f1 !important;  /* 与 body 主背景相同 */
+		    background-image: radial-gradient(ellipse at 15% 10%, rgba(148, 7, 10, 0.018) 0%, transparent 60%),
+		                      radial-gradient(ellipse at 85% 90%, rgba(196, 146, 46, 0.015) 0%, transparent 60%),
+		                      radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0.008) 0%, transparent 70%) !important;
+		    border-bottom: 1px solid rgba(0, 0, 0, 0.05);  /* 可选：添加淡边框区隔 */
+		    box-shadow: none;  /* 移除可能存在的阴影 */
+		}
+		
+		/* 确保菜单链接颜色也协调（可选） */
+		.greedy-nav .nav-links a,
+		.greedy-nav .site-title {
+		    color: #1a1a1a !important;  /* 深色文字，与页面主色调一致 */
+		}
+		
+		/* 移动端汉堡菜单按钮样式 */
+		.greedy-nav .greedy-nav__toggle {
+		    background-color: transparent !important;
+		}
+		
+		/* 菜单下拉面板背景统一 */
+		.greedy-nav .hidden-links {
+		    background-color: #f5f4f1 !important;
+		    border: 1px solid var(--border);
+		}
         /* 打印样式 */
         @media print {
             body {
