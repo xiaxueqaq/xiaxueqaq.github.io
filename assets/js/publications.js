@@ -9,10 +9,10 @@ function groupPublications() {
     // 创建两个分组容器
     const publishedGroup = document.createElement('div');
     publishedGroup.className = 'publication-group';
-    publishedGroup.innerHTML = '<h2 class="section-title">📖 已出版作品</h2><div class="group-items"></div>';
+    publishedGroup.innerHTML = '<h2 class="section-title">📖 Published </h2><div class="group-items"></div>';
     const preprintGroup = document.createElement('div');
     preprintGroup.className = 'publication-group';
-    preprintGroup.innerHTML = '<h2 class="section-title">📄 预印本 / 待发表</h2><div class="group-items"></div>';
+    preprintGroup.innerHTML = '<h2 class="section-title">📄 Preprint </h2><div class="group-items"></div>';
 
     // 清空原容器
     container.innerHTML = '';
