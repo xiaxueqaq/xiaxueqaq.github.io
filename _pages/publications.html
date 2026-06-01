@@ -581,7 +581,38 @@ author_profile: true
             }
             */
         }
-
+		/* 分组样式 */
+		.publication-group {
+		    margin-bottom: 48px;
+		}
+		
+		.section-title {
+		    font-family: var(--font-serif);
+		    font-size: 1.7rem;
+		    font-weight: 600;
+		    color: var(--beida-red);
+		    border-left: 5px solid var(--beida-gold);
+		    padding-left: 16px;
+		    margin: 0 0 20px 0;
+		    letter-spacing: -0.01em;
+		}
+		
+		.group-items {
+		    display: flex;
+		    flex-direction: column;
+		    gap: 14px;
+		}
+		
+		/* 响应式调整 */
+		@media (max-width: 768px) {
+		    .section-title {
+		        font-size: 1.4rem;
+		        margin-bottom: 16px;
+		    }
+		    .publication-group {
+		        margin-bottom: 32px;
+		    }
+		}
         /* 打印样式 */
         @media print {
             body {
@@ -654,6 +685,7 @@ author_profile: true
             <span>💡</span> Click the title to fold/unfold abstract
         </p>
 
+
         <!-- ==================== 发表列表 ==================== -->
         <div class="publication-list" id="publicationList">
 
@@ -664,7 +696,7 @@ author_profile: true
                     <div class="pub-title-row" onclick="togglePublication(this)" title="点击展开/收起摘要" role="button"
                     tabindex="0" aria-expanded="false">
                     <span class="pub-authors-title">
-                        <span class="authors">Rizeng Chen.</span>
+                        <span class="authors">Rizeng Chen (2026).</span>
                         <span class="title-separator">&nbsp;</span>
                         <span class="paper-title">A Geometric Approach to Cylindrical Algebraic Decomposition</span>
                     </span>
@@ -676,7 +708,7 @@ author_profile: true
                 </div>
 		<!-- 👇 新增出版信息 -->
                 <div class="pub-venue" style="color:#0056b3; font-weight:500; margin:-4px 0 4px; font-size:0.95rem;">
-                    Mathematics of Computations (2026), 95(360), pp. 2025-2059.
+                    Mathematics of Computations, 95(360), pp. 2025-2059.
                 </div>
 		<!-- 摘要 -->
                 <div class="pub-abstract-wrapper">
@@ -729,7 +761,7 @@ author_profile: true
                 <div class="pub-title-row" onclick="togglePublication(this)" title="点击展开/收起摘要" role="button"
                 tabindex="0" aria-expanded="false">
                 <span class="pub-authors-title">
-                    <span class="authors">Rizeng Chen.</span>
+                    <span class="authors">Rizeng Chen (2026).</span>
                     <span class="title-separator">&nbsp;</span>
                     <span class="paper-title">An Effective Criterion for Covering Maps Between Real Algebraic Varieties</span>
                 </span>
@@ -741,7 +773,7 @@ author_profile: true
             </div>
 	    <!-- 👇 新增出版信息 -->
             <div class="pub-venue" style="color:#0056b3; font-weight:500; margin:-4px 0 4px; font-size:0.95rem;">
-                 Preprint (2026), arXiv:2602.21708.
+                 Preprint, arXiv:2602.21708.
             </div>
 	    <div class="pub-abstract-wrapper">
                 <div class="pub-abstract-inner">
@@ -794,7 +826,7 @@ author_profile: true
                     <div class="pub-title-row" onclick="togglePublication(this)" title="点击展开/收起摘要" role="button"
                     tabindex="0" aria-expanded="false">
                     <span class="pub-authors-title">
-                        <span class="authors">Rizeng Chen, Hoon Hong and Jing Yang.</span>
+                        <span class="authors">Rizeng Chen, Hoon Hong, and Jing Yang. (2025).</span>
                         <span class="title-separator">&nbsp;</span>
                         <span class="paper-title">Stratifying Discriminant Hypersurface</span>
                     </span>
@@ -806,7 +838,7 @@ author_profile: true
                 </div>
 		<!-- 👇 新增出版信息 -->
                 <div class="pub-venue" style="color:#0056b3; font-weight:500; margin:-4px 0 4px; font-size:0.95rem;">
-                    Preprint (2025), arXiv:2509.25820.
+                    Preprint, arXiv:2509.25820.
                 </div>
 		<!-- 摘要 -->
                 <div class="pub-abstract-wrapper">
@@ -862,7 +894,7 @@ author_profile: true
                 <div class="pub-title-row" onclick="togglePublication(this)" title="点击展开/收起摘要" role="button"
                 tabindex="0" aria-expanded="false">
                 <span class="pub-authors-title">
-                    <span class="authors">Rizeng Chen.</span>
+                    <span class="authors">Rizeng Chen (2025).</span>
                     <span class="title-separator">&nbsp;</span>
                     <span class="paper-title">What Kind of Morphisms Induces Covering Maps over a Real Closed Field?</span>
                 </span>
@@ -874,7 +906,7 @@ author_profile: true
             </div>
 	    <!-- 👇 新增出版信息 -->
             <div class="pub-venue" style="color:#0056b3; font-weight:500; margin:-4px 0 4px; font-size:0.95rem;">
-                 Preprint (2025), arXiv:2502.05834.
+                 Preprint, arXiv:2502.05834.
             </div>
 	    <div class="pub-abstract-wrapper">
                 <div class="pub-abstract-inner">
@@ -927,7 +959,7 @@ author_profile: true
                     <div class="pub-title-row" onclick="togglePublication(this)" title="点击展开/收起摘要" role="button"
                     tabindex="0" aria-expanded="false">
                     <span class="pub-authors-title">
-                        <span class="authors">Rizeng Chen and Bican Xia.</span>
+                        <span class="authors">Rizeng Chen, and Bican Xia (2024).</span>
                         <span class="title-separator">&nbsp;</span>
                         <span class="paper-title">Reduction of Transcendental Decision Problems over the Reals</span>
                     </span>
@@ -992,7 +1024,7 @@ author_profile: true
                 <div class="pub-title-row" onclick="togglePublication(this)" title="点击展开/收起摘要" role="button"
                 tabindex="0" aria-expanded="false">
                 <span class="pub-authors-title">
-                    <span class="authors">Rizeng Chen, Haokun Li, Bican Xia, Tao Zheng, Tianqi Zhao.</span>
+                    <span class="authors">Rizeng Chen, Haokun Li, Bican Xia, Tianqi Zhao, and Tao Zheng (2024).</span>
                     <span class="title-separator">&nbsp;</span>
                     <span class="paper-title">Isolating all the real roots of a mixed trigonometric-polynomial</span>
                 </span>
@@ -1058,7 +1090,7 @@ author_profile: true
                     <div class="pub-title-row" onclick="togglePublication(this)" title="点击展开/收起摘要" role="button"
                     tabindex="0" aria-expanded="false">
                     <span class="pub-authors-title">
-                        <span class="authors">Rizeng Chen and Bican Xia.</span>
+                        <span class="authors">Rizeng Chen, Bican Xia (2023).</span>
                         <span class="title-separator">&nbsp;</span>
                         <span class="paper-title">Deciding first-order formulas involving univariate mixed trigonometric-polynomials</span>
                     </span>
@@ -1116,7 +1148,7 @@ author_profile: true
             </div>
         </article>
 </div><!-- /publication-list -->
-
+		
 </div><!-- /main-container -->
 
 <script src="/assets/js/publications.js"></script>
