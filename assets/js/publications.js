@@ -1,3 +1,44 @@
+function groupPublications() {
+    const container = document.querySelector('.publication-list');
+    if (!container) return;
+
+    // 清空容器，但保留原始 article 列表
+    const articles = Array.from(container.querySelectorAll('.publication-item'));
+    if (articles.length === 0) return;
+
+    // 创建两个分组容器
+    const publishedGroup = document.createElement('div');
+    publishedGroup.className = 'publication-group';
+    publishedGroup.innerHTML = '<h2 class="section-title">📖 已出版作品</h2><div class="group-items"></div>';
+    const preprintGroup = document.createElement('div');
+    preprintGroup.className = 'publication-group';
+    preprintGroup.innerHTML = '<h2 class="section-title">📄 预印本 / 待发表</h2><div class="group-items"></div>';
+
+    // 清空原容器
+    container.innerHTML = '';
+
+    articles.forEach(article => {
+        const venueDiv = article.querySelector('.pub-venue');
+        const isPreprint = venueDiv && venueDiv.textContent.includes('Preprint');
+        const targetGroup = isPreprint ? preprintGroup : publishedGroup;
+        targetGroup.querySelector('.group-items').appendChild(article);
+    });
+
+    // 如果某组没有文章，可以不显示该组（可选）
+    if (publishedGroup.querySelector('.group-items').children.length > 0) {
+        container.appendChild(publishedGroup);
+    }
+    if (preprintGroup.querySelector('.group-items').children.length > 0) {
+        container.appendChild(preprintGroup);
+    }
+}
+
+// 在 DOMContentLoaded 中调用
+document.addEventListener('DOMContentLoaded', function() {
+    // 其他初始化...
+    groupPublications();
+});
+
 /**
      * 切换单篇文章摘要的展开/收起状态
      * @param {HTMLElement} titleRow - 被点击的标题行元素
