@@ -340,7 +340,7 @@ body {
   line-height: 1.75;
   white-space: pre-wrap;
   word-break: break-word;
-  font-family: var(--font-serif);
+  font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
 }
 
 .op-card .card-body.collapsed {
@@ -399,6 +399,8 @@ body {
 .comment-card {
   width: 220px;
   min-width: 220px;
+  --box-bgcolor-light: hsl(0,0%,97%);
+  background-color: var(--box-bgcolor-light);
 }
 
 .comment-card .card-header {
@@ -421,7 +423,7 @@ body {
   line-height: 1.65;
   white-space: pre-wrap;
   word-break: break-word;
-  font-family: var(--font-serif);
+  font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
 }
 
 .comment-card .comment-speaker {
@@ -478,7 +480,7 @@ body {
 .panel-header h3 {
   font-size: 17px;
   color: var(--accent);
-  font-family: var(--font-serif);
+  font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
 }
 
 .panel-close {
@@ -507,7 +509,8 @@ body {
 }
 
 .panel-card {
-  background: var(--card-bg);
+  --box-bgcolor-light: var(--card-bg);
+  background-color: var(--box-bgcolor-light);
   border: 1px solid var(--card-border);
   border-radius: 10px;
   padding: 12px 14px;
@@ -536,7 +539,7 @@ body {
   line-height: 1.7;
   white-space: pre-wrap;
   word-break: break-word;
-  font-family: var(--font-serif);
+  font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
 }
 
 .panel-card .panel-card-images img {
@@ -847,6 +850,8 @@ body {
 
   .panel-card {
     padding: 10px 12px;
+    --box-bgcolor-light: hsl(0,0%,97%);
+    background-color: var(--box-bgcolor-light);
   }
   .panel-card .panel-speaker { font-size: 13px; }
   .panel-card .panel-card-body { font-size: 13px; line-height: 1.65; }
@@ -1037,6 +1042,21 @@ body {
            String(d.getSeconds()).padStart(2,'0');
   }
 
+  // ── Color picker (golden ratio HSV, same as official PKU Treehole) ──────
+  const GOLDEN_RATIO = 0.618033988749895;
+  function getUserColor(hole, name) {
+    if (name === '洞主') return 'hsl(0,0%,97%)';
+    if (!hole._colorPick) hole._colorPick = { names: {}, currentH: Math.random() };
+    const cp = hole._colorPick;
+    const key = name.toLowerCase();
+    if (!cp.names[key]) {
+      cp.currentH += GOLDEN_RATIO;
+      cp.currentH %= 1;
+      cp.names[key] = 'hsl('+(cp.currentH*360).toFixed(0)+', 50%, 90%)';
+    }
+    return cp.names[key];
+  }
+
   // ── Display name ────────────────────────────────────────────────────────
   // The TXT data already follows the naming convention (Alice, Bob, Carol, …)
   // so we use the name directly. "洞主" stays as "洞主".
@@ -1148,6 +1168,7 @@ body {
   function buildCommentCard(hole, comment, index) {
     const card = document.createElement('div');
     card.className = 'card comment-card';
+    card.style.setProperty('--box-bgcolor-light', getUserColor(hole, comment.name));
     card.dataset.pid = hole.pid;
     card.dataset.commentIdx = index;
 
@@ -1257,10 +1278,10 @@ body {
   }
 
   function buildPanelCard(hole, comment, index) {
+    const isOP = index === -1;
     const card = document.createElement('div');
     card.className = 'panel-card';
-
-    const isOP = index === -1;
+    card.style.setProperty('--box-bgcolor-light', getUserColor(hole, isOP ? '洞主' : (comment ? comment.name : '洞主')));
     const displayName = isOP ? '洞主' : getDisplayName(comment);
     const text = isOP ? hole.text : comment.text;
     const replyTo = isOP ? null : comment.replyTo;
