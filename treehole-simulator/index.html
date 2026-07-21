@@ -150,12 +150,17 @@ body {
   white-space: nowrap;
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
 .disclaimer-text {
   color: rgba(255,255,255,0.5);
   font-size: 11px;
   white-space: nowrap;
-  margin-left: auto;
-  margin-right: 10px;
 }
 
 .rebuild-btn {
@@ -173,7 +178,6 @@ body {
   transition: all 0.2s;
   white-space: nowrap;
   flex-shrink: 0;
-  margin-left: auto;
 }
 
 .rebuild-btn:hover {
@@ -427,6 +431,14 @@ body {
 }
 
 /* ── Right Panel ───────────────────────────────────────────────────────── */
+.panel-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 185;
+}
+
 .detail-panel {
   position: fixed;
   right: 0;
@@ -677,12 +689,25 @@ body {
   .search-input { font-size: 14px; padding: 8px 12px 8px 34px; }
   .result-count { font-size: 11px; text-align: center; }
 
+  .header-actions {
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin: 4px auto 0;
+  }
+
   .rebuild-btn {
-    padding: 4px 10px;
-    font-size: 12px;
+    padding: 6px 14px;
+    font-size: 13px;
+    margin: 0;
   }
   .rebuild-icon { width: 14px; height: 14px; }
-  .disclaimer-text { font-size: 9px; margin-right: 4px; }
+
+  .disclaimer-text {
+    text-align: center;
+    font-size: 9px;
+    margin: 0;
+  }
 
   /* ── Feed ─────────────────────────────────────────────────────────── */
   .feed {
@@ -763,6 +788,17 @@ body {
     flex-shrink: 0;
   }
 
+  .panel-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    z-index: 195;
+  }
+  .panel-backdrop.hidden {
+    display: none;
+  }
+
   .detail-panel {
     position: fixed;
     top: 0;
@@ -793,6 +829,11 @@ body {
     border-radius: 16px 16px 0 0;
   }
   .panel-header h3 { font-size: 15px; }
+
+  .panel-close {
+    width: 40px; height: 40px;
+    font-size: 22px;
+  }
 
   .panel-posts {
     flex: 1;
@@ -897,19 +938,22 @@ body {
            placeholder="搜索关键词或洞号… (支持空格分隔多关键词)">
   </div>
   <div class="result-count" id="resultCount"></div>
-  <span class="disclaimer-text">本模拟器内容均由AI虚构，与现实生活无关。如有雷同，纯属巧合。</span>
-  <button class="rebuild-btn" id="rebuildBtn" title="重建数据">
+  <div class="header-actions">
+    <span class="disclaimer-text">本模拟器内容均由AI虚构，与现实生活无关。如有雷同，纯属巧合。</span>
+    <button class="rebuild-btn" id="rebuildBtn" title="重建数据">
     <svg class="rebuild-icon" viewBox="0 0 24 24" width="16" height="16">
       <path d="M17.65 6.35A7.96 7.96 0 0 0 12 4C7.58 4 4.01 7.58 4.01 12S7.58 20 12 20c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z" fill="currentColor"/>
       <path d="M20 4v7h-7l2.93-2.93A6.47 6.47 0 0 0 12 5a7 7 0 0 0-6.93 6H3.05A9 9 0 0 1 12 3c2.34 0 4.47.89 6.07 2.36L20 4z" fill="currentColor" opacity="0.55"/>
     </svg>
     <span class="rebuild-text">刷新</span>
   </button>
+  </div>
 </header>
 
 <!-- ── Main Content ─────────────────────────────────────────────────────── -->
 <div class="main-container">
   <div class="feed no-panel" id="feed"></div>
+  <div class="panel-backdrop hidden" id="panelBackdrop"></div>
   <aside class="detail-panel hidden" id="detailPanel">
     <div class="panel-handle"></div>
     <div class="panel-header">
@@ -1181,6 +1225,7 @@ body {
 
     selectedPid = pid;
     detailPanel.classList.remove('hidden');
+    document.getElementById('panelBackdrop').classList.remove('hidden');
     document.getElementById('feed').classList.remove('no-panel');
     document.body.classList.add('panel-open');
     panelTitle.textContent = '#' + pid + ' 树洞详情';
@@ -1289,12 +1334,28 @@ body {
   function closeDetail() {
     selectedPid = null;
     detailPanel.classList.add('hidden');
+    document.getElementById('panelBackdrop').classList.add('hidden');
     document.getElementById('feed').classList.add('no-panel');
     document.body.classList.remove('panel-open');
     panelPosts.innerHTML = '<div class="panel-empty">点击卡片查看树洞详情</div>';
   }
 
   document.getElementById('panelClose').addEventListener('click', closeDetail);
+
+  // Backdrop click → close panel
+  document.getElementById('panelBackdrop').addEventListener('click', closeDetail);
+
+  // Touch swipe-down to dismiss panel on mobile
+  let touchStartY = 0;
+  detailPanel.addEventListener('touchstart', (e) => {
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+  detailPanel.addEventListener('touchmove', (e) => {
+    const delta = e.touches[0].clientY - touchStartY;
+    if (delta > 80 && detailPanel.scrollTop <= 0) {
+      closeDetail();
+    }
+  }, { passive: true });
 
   // ── Lightbox ───────────────────────────────────────────────────────────
   function openLightbox(src) {
