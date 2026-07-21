@@ -1,1 +1,1461 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P大树洞</title>
+<style>
+/* ── Reset & Variables ─────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+:root {
+  --bg: #f5f0eb;
+  --card-bg: #fffdf9;
+  --card-border: #e0d8cc;
+  --text: #3a3226;
+  --text-secondary: #8c8276;
+  --accent: #8b1a1a;
+  --accent-light: #f0e0d6;
+  --shadow: 0 2px 8px rgba(0,0,0,0.06);
+  --radius: 12px;
+  --font-sans: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  --font-serif: "Noto Serif SC", "Source Han Serif SC", "SimSun", serif;
+  --panel-width: 520px;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* ── Header ────────────────────────────────────────────────────────────── */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: linear-gradient(135deg, #6b1010 0%, #8b1a1a 40%, #a0522d 100%);
+  padding: 16px 24px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.header-title {
+  font-family: var(--font-serif);
+  font-size: 30px;
+  font-weight: 900;
+  color: #ffffff;
+  white-space: nowrap;
+  letter-spacing: 3px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  cursor: pointer;
+  user-select: none;
+}
+
+.header-title:hover {
+  opacity: 0.85;
+}
+
+.header-title .simulator-tag {
+  display: inline;
+  font-family: var(--font-serif);
+  font-size: 30px;
+  font-weight: 900;
+  color: #000000;
+  background: #ff9900;
+  padding: 2px 6px;
+  border-radius: 6px;
+  letter-spacing: 3px;
+  text-shadow: none;
+  vertical-align: baseline;
+  margin-left: 6px;
+}
+
+.header-title .en-sub {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 8px;
+  line-height: 1.15;
+  text-shadow: none;
+  color: #e8e0d4;
+}
+
+.header-title .en-sub i {
+  display: block;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+
+.header-title .en-sub i:first-child {
+  font-size: 11px;
+}
+
+.header-title .en-sub i:last-child {
+  font-size: 14px;
+}
+
+.search-wrap {
+  flex: 1;
+  max-width: 480px;
+  position: relative;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 16px 10px 40px;
+  border: 2px solid transparent;
+  border-radius: 24px;
+  font-size: 15px;
+  background: rgba(255,255,255,0.92);
+  color: var(--text);
+  outline: none;
+  transition: all 0.25s;
+  font-family: var(--font-sans);
+}
+
+.search-input:focus {
+  background: #fff;
+  border-color: #d4a76a;
+  box-shadow: 0 0 0 4px rgba(212,167,106,0.15);
+}
+
+.search-input::placeholder { color: #b0a090; }
+
+.search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #b0a090;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.search-hint {
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+  margin-top: 2px;
+  padding-left: 4px;
+}
+
+.result-count {
+  color: rgba(255,255,255,0.75);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.disclaimer-text {
+  color: rgba(255,255,255,0.5);
+  font-size: 11px;
+  white-space: nowrap;
+  margin-left: auto;
+  margin-right: 10px;
+}
+
+.rebuild-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border: 1.5px solid rgba(255,255,255,0.5);
+  border-radius: 6px;
+  background: transparent;
+  color: #fff;
+  font-size: 13px;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.rebuild-btn:hover {
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.8);
+}
+
+.rebuild-btn:active {
+  background: rgba(255,255,255,0.2);
+}
+
+.rebuild-icon {
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+
+.rebuild-btn:hover .rebuild-icon {
+  transform: rotate(-30deg);
+}
+
+.rebuild-btn.spinning .rebuild-icon {
+  animation: spin 0.8s linear infinite;
+}
+
+.rebuild-btn.spinning {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+/* ── Main Layout ───────────────────────────────────────────────────────── */
+.main-container {
+  display: flex;
+  min-height: calc(100vh - 90px);
+}
+
+.feed {
+  flex: 1;
+  padding: 20px 24px;
+  max-width: calc(100% - var(--panel-width));
+  transition: max-width 0.3s;
+}
+
+.feed.no-panel {
+  max-width: 100%;
+}
+
+/* ── Treehole Row ──────────────────────────────────────────────────────── */
+.treehole-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+  align-items: flex-start;
+  scroll-margin-top: 100px;
+}
+
+/* Comment strip — wraps comment cards inline on desktop, scrolls on mobile */
+.comment-strip {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  min-width: 0;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.treehole-row.selected-row {
+  background: linear-gradient(90deg, rgba(139,26,26,0.04) 0%, transparent 100%);
+  border-radius: 12px;
+  padding: 8px;
+  margin-left: -8px;
+}
+
+/* ── Cards ─────────────────────────────────────────────────────────────── */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: all 0.2s;
+  cursor: pointer;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  transform: translateY(-1px);
+}
+
+.card.selected {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(139,26,26,0.12), 0 4px 16px rgba(0,0,0,0.1);
+}
+
+/* ── OP Card ───────────────────────────────────────────────────────────── */
+.op-card {
+  width: 380px;
+  min-width: 380px;
+}
+
+.op-card .card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px 8px;
+  border-bottom: 1px solid #f0ebe0;
+}
+
+.op-card .card-header-left { display: flex; flex-direction: column; gap: 2px; }
+.op-card .pid-tag {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.5px;
+}
+
+.op-card .time-info {
+  font-size: 12px;
+  color: var(--text-secondary);
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.op-card .time-relative {
+  background: var(--accent-light);
+  color: var(--accent);
+  padding: 2px 7px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.op-card .card-header-right {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  align-items: flex-end;
+}
+
+.op-card .stat-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.op-card .stat-item {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  white-space: nowrap;
+}
+
+.op-card .card-body {
+  padding: 10px 14px;
+  font-size: 14.5px;
+  line-height: 1.75;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: var(--font-serif);
+}
+
+.op-card .card-body.collapsed {
+  max-height: 140px;
+  overflow: hidden;
+  position: relative;
+}
+
+.op-card .card-body.collapsed::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  background: linear-gradient(transparent, var(--card-bg));
+}
+
+.expand-btn {
+  display: block;
+  width: 100%;
+  padding: 6px;
+  border: none;
+  background: #faf6ef;
+  color: var(--accent);
+  font-size: 13px;
+  cursor: pointer;
+  border-top: 1px solid #f0ebe0;
+  transition: background 0.15s;
+  font-family: var(--font-sans);
+}
+
+.expand-btn:hover { background: #f5efe4; }
+
+.op-card .card-images {
+  padding: 6px 14px 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.op-card .card-images img {
+  max-width: 100%;
+  max-height: 260px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: #fafafa;
+  border: 1px solid #eee;
+  cursor: zoom-in;
+  transition: transform 0.15s;
+}
+
+.op-card .card-images img:hover { transform: scale(1.02); }
+
+/* ── Comment Card ──────────────────────────────────────────────────────── */
+.comment-card {
+  width: 220px;
+  min-width: 220px;
+}
+
+.comment-card .card-header {
+  padding: 10px 12px 6px;
+  border-bottom: 1px solid #f0ebe0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.comment-card .comment-id {
+  font-size: 13px;
+  font-weight: 600;
+  color: #5c4033;
+}
+
+.comment-card .comment-body {
+  padding: 8px 12px 10px;
+  font-size: 13.5px;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: var(--font-serif);
+}
+
+.comment-card .comment-speaker {
+  font-weight: 600;
+  color: #6b4423;
+  margin-right: 4px;
+}
+
+/* ── Right Panel ───────────────────────────────────────────────────────── */
+.detail-panel {
+  position: fixed;
+  right: 0;
+  top: 90px;
+  bottom: 0;
+  width: var(--panel-width);
+  background: #fdfaf5;
+  border-left: 1px solid var(--card-border);
+  box-shadow: -4px 0 24px rgba(0,0,0,0.08);
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(0);
+  transition: transform 0.3s;
+}
+
+.detail-panel.hidden {
+  transform: translateX(100%);
+}
+
+.panel-handle {
+  display: none;
+}
+
+.panel-header {
+  padding: 14px 18px;
+  border-bottom: 2px solid #e0d8cc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fffdf9;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.panel-header h3 {
+  font-size: 17px;
+  color: var(--accent);
+  font-family: var(--font-serif);
+}
+
+.panel-close {
+  width: 32px; height: 32px;
+  border: none;
+  background: #f0e8db;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  transition: all 0.15s;
+}
+
+.panel-close:hover { background: #e0d0bb; color: var(--accent); }
+
+.panel-posts {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.panel-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.panel-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+
+.panel-card .panel-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.panel-card .panel-speaker {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--accent);
+}
+
+.panel-card .panel-card-body {
+  font-size: 14px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: var(--font-serif);
+}
+
+.panel-card .panel-card-images img {
+  max-width: 100%;
+  max-height: 300px;
+  border-radius: 6px;
+  margin-top: 8px;
+}
+
+.panel-empty {
+  text-align: center;
+  color: var(--text-secondary);
+  padding: 40px 20px;
+  font-size: 15px;
+}
+
+/* ── Number links in text ──────────────────────────────────────────────── */
+.num-link {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+
+.num-link:hover {
+  color: #c0392b;
+  background: var(--accent-light);
+  border-radius: 3px;
+  padding: 0 2px;
+}
+
+.num-link.not-found {
+  color: #999;
+  text-decoration-color: #ccc;
+}
+
+/* ── Loading / Scroll ──────────────────────────────────────────────────── */
+.loading-indicator {
+  text-align: center;
+  padding: 30px;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.spinner {
+  display: inline-block;
+  width: 24px; height: 24px;
+  border: 3px solid #e0d8cc;
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Scrollbar ─────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #d0c8b8; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #b0a898; }
+
+/* ── Image Lightbox ────────────────────────────────────────────────────── */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+}
+
+.lightbox img {
+  max-width: 92vw;
+  max-height: 92vh;
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 16px;
+  right: 24px;
+  color: #fff;
+  font-size: 36px;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+  background: none;
+  border: none;
+  line-height: 1;
+}
+
+.lightbox-close:hover { opacity: 1; }
+
+/* ── Responsive ────────────────────────────────────────────────────────── */
+
+/* Tablet: 769–1024px — narrower panel, smaller cards */
+@media (max-width: 1024px) {
+  :root { --panel-width: 420px; }
+  .op-card { width: 340px; min-width: 340px; }
+  .comment-card { width: 190px; min-width: 190px; }
+  .header { padding: 12px 16px; }
+  .header-title { font-size: 24px; letter-spacing: 2px; }
+  .header-title .simulator-tag { font-size: 24px; }
+  .header-title .en-sub i:first-child { font-size: 9px; }
+  .header-title .en-sub i:last-child { font-size: 11px; }
+  .search-input { font-size: 14px; }
+}
+
+/* Mobile: ≤768px — full restructure */
+@media (max-width: 768px) {
+  /* ── Variables ────────────────────────────────────────────────────── */
+  :root { --panel-width: 100vw; }
+
+  /* ── Header ───────────────────────────────────────────────────────── */
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 10px 12px;
+    gap: 8px;
+    position: sticky;
+    top: 0;
+  }
+
+  .header-title {
+    font-size: 22px;
+    letter-spacing: 2px;
+    text-align: center;
+  }
+  .header-title .simulator-tag {
+    font-size: 22px;
+    padding: 1px 5px;
+    margin-left: 4px;
+  }
+  .header-title .en-sub {
+    margin-left: 4px;
+  }
+  .header-title .en-sub i:first-child { font-size: 8px; }
+  .header-title .en-sub i:last-child { font-size: 10px; }
+
+  .search-wrap { max-width: 100%; }
+  .search-input { font-size: 14px; padding: 8px 12px 8px 34px; }
+  .result-count { font-size: 11px; text-align: center; }
+
+  .rebuild-btn {
+    padding: 4px 10px;
+    font-size: 12px;
+  }
+  .rebuild-icon { width: 14px; height: 14px; }
+  .disclaimer-text { font-size: 9px; margin-right: 4px; }
+
+  /* ── Feed ─────────────────────────────────────────────────────────── */
+  .feed {
+    max-width: 100%;
+    padding: 10px 8px;
+  }
+  .feed.no-panel {
+    max-width: 100%;
+  }
+
+  /* ── Treehole row ─────────────────────────────────────────────────── */
+  .treehole-row {
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 12px;
+    scroll-margin-top: 120px;
+    max-width: 100vw;
+    overflow: visible;
+  }
+  .treehole-row.selected-row {
+    padding: 6px;
+    margin-left: 0;
+  }
+
+  /* ── Cards ────────────────────────────────────────────────────────── */
+  .op-card {
+    width: 100%;
+    min-width: unset;
+    max-width: 100%;
+  }
+  .op-card .card-header {
+    padding: 8px 10px 6px;
+  }
+  .op-card .pid-tag { font-size: 14px; }
+  .op-card .card-body {
+    font-size: 13.5px;
+    padding: 8px 10px;
+    line-height: 1.7;
+  }
+  .op-card .card-body.collapsed { max-height: 120px; }
+  .op-card .card-images img { max-height: 200px; }
+
+  /* ── Comment strip (horizontal scroll under OP card) ──────────────── */
+  .treehole-row .comment-card {
+    width: 200px;
+    min-width: 200px;
+    flex-shrink: 0;
+  }
+
+  /* Wrap all comment cards in a horizontal scroll strip */
+  .comment-strip {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    max-width: 100%;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+  }
+  .comment-strip .comment-card {
+    scroll-snap-align: start;
+  }
+  .comment-strip::-webkit-scrollbar { height: 4px; }
+  .comment-strip::-webkit-scrollbar-thumb { background: #d0c8b8; border-radius: 2px; }
+
+  .comment-card .card-header { padding: 6px 8px 4px; }
+  .comment-card .comment-id { font-size: 12px; }
+  .comment-card .comment-body { font-size: 12.5px; padding: 6px 8px 8px; }
+
+  /* ── Detail panel — full-screen overlay from bottom ───────────────── */
+  .panel-handle {
+    display: block;
+    width: 36px;
+    height: 4px;
+    background: #c8c0b0;
+    border-radius: 2px;
+    margin: 10px auto 0;
+    flex-shrink: 0;
+  }
+
+  .detail-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    z-index: 200;
+    transform: translateY(100%);
+    border-radius: 16px 16px 0 0;
+    border-left: none;
+    box-shadow: 0 -4px 30px rgba(0,0,0,0.2);
+  }
+  .detail-panel:not(.hidden) {
+    transform: translateY(0);
+  }
+  .detail-panel.hidden {
+    transform: translateY(100%);
+  }
+
+  .panel-header {
+    padding: 14px 14px 10px;
+    border-bottom: 2px solid #e0d8cc;
+    flex-shrink: 0;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 16px 16px 0 0;
+  }
+  .panel-header h3 { font-size: 15px; }
+
+  .panel-posts {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px 10px;
+    gap: 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .panel-card {
+    padding: 10px 12px;
+  }
+  .panel-card .panel-speaker { font-size: 13px; }
+  .panel-card .panel-card-body { font-size: 13px; line-height: 1.65; }
+
+  /* ── Tag badge ────────────────────────────────────────────────────── */
+  .tag-badge { font-size: 10px; max-width: 100px; }
+
+  /* ── Reply quote ──────────────────────────────────────────────────── */
+  .reply-quote { font-size: 11px; padding: 3px 6px; }
+
+  /* ── Expand button ────────────────────────────────────────────────── */
+  .expand-btn { font-size: 12px; padding: 4px; }
+}
+
+/* Nested mobile scroll fix: prevent body scroll when panel is open */
+@media (max-width: 768px) {
+  body {
+    overflow-x: hidden;
+  }
+  body.panel-open {
+    overflow: hidden;
+  }
+  .feed {
+    overflow-x: hidden;
+  }
+  .main-container {
+    overflow-x: hidden;
+  }
+}
+
+/* ── Reply indicator ───────────────────────────────────────────────────── */
+.reply-indicator {
+  font-size: 11px;
+  color: #b0a090;
+  margin-left: 4px;
+}
+
+.tag-badge {
+  display: inline-block;
+  background: #4444cc;
+  color: #fff;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-weight: 500;
+  line-height: 1.4;
+  white-space: nowrap;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Reply quote box ──────────────────────────────────────────────────── */
+.reply-quote {
+  background: #f5f0e8;
+  border-left: 3px solid #c8b898;
+  border-radius: 4px;
+  padding: 4px 8px;
+  margin-bottom: 6px;
+  font-size: 12px;
+  color: #8c8276;
+  line-height: 1.5;
+  display: flex;
+  gap: 4px;
+  min-width: 0;
+}
+
+.reply-quote .quote-name {
+  font-weight: 600;
+  color: #6b4423;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.reply-quote .quote-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+</style>
+</head>
+<body>
+
+<!-- ── Header ──────────────────────────────────────────────────────────── -->
+<header class="header">
+  <div class="header-title" id="headerTitle">🍉 P大树洞<span class="simulator-tag">模拟器</span><span class="en-sub"><i>PKU Treehole</i><i>Simulator</i></span></div>
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" class="search-input" id="searchInput"
+           placeholder="搜索关键词或洞号… (支持空格分隔多关键词)">
+  </div>
+  <div class="result-count" id="resultCount"></div>
+  <span class="disclaimer-text">本模拟器内容均由AI虚构，与现实生活无关。如有雷同，纯属巧合。</span>
+  <button class="rebuild-btn" id="rebuildBtn" title="重建数据">
+    <svg class="rebuild-icon" viewBox="0 0 24 24" width="16" height="16">
+      <path d="M17.65 6.35A7.96 7.96 0 0 0 12 4C7.58 4 4.01 7.58 4.01 12S7.58 20 12 20c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z" fill="currentColor"/>
+      <path d="M20 4v7h-7l2.93-2.93A6.47 6.47 0 0 0 12 5a7 7 0 0 0-6.93 6H3.05A9 9 0 0 1 12 3c2.34 0 4.47.89 6.07 2.36L20 4z" fill="currentColor" opacity="0.55"/>
+    </svg>
+    <span class="rebuild-text">刷新</span>
+  </button>
+</header>
+
+<!-- ── Main Content ─────────────────────────────────────────────────────── -->
+<div class="main-container">
+  <div class="feed no-panel" id="feed"></div>
+  <aside class="detail-panel hidden" id="detailPanel">
+    <div class="panel-handle"></div>
+    <div class="panel-header">
+      <h3 id="panelTitle">#树洞详情</h3>
+      <button class="panel-close" id="panelClose" title="关闭">✕</button>
+    </div>
+    <div class="panel-posts" id="panelPosts">
+      <div class="panel-empty">点击卡片查看树洞详情</div>
+    </div>
+  </aside>
+</div>
+
+<!-- ── Lightbox ─────────────────────────────────────────────────────────── -->
+<div class="lightbox" id="lightbox" style="display:none;">
+  <button class="lightbox-close" id="lightboxClose">✕</button>
+  <img src="" alt="" id="lightboxImg">
+</div>
+
+<!-- ── Data ─────────────────────────────────────────────────────────────── -->
+<script src="fake-data.js"></script>
+
+<!-- ── Application Logic ────────────────────────────────────────────────── -->
+<script>
+(function() {
+  'use strict';
+
+  // ── Constants ──────────────────────────────────────────────────────────
+  const DISPLAY_BATCH = 30;
+  const COLLAPSE_LENGTH = 300;
+  const PIC_DIR = 'treehole-pic';
+
+  // ── Globals ────────────────────────────────────────────────────────────
+  const data = window.TREEHOLE_DATA || [];
+  const holeIndex = new Map();
+  let selectedPid = null;
+  let displayCount = 0;
+  let loadingMore = false;
+  const feedEl = document.getElementById('feed');
+  const detailPanel = document.getElementById('detailPanel');
+  const panelPosts = document.getElementById('panelPosts');
+  const panelTitle = document.getElementById('panelTitle');
+  const searchInput = document.getElementById('searchInput');
+  const resultCount = document.getElementById('resultCount');
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+
+  // Build lookup
+  for (const h of data) holeIndex.set(h.pid, h);
+
+  // ── Shuffle helper (Fisher-Yates) ────────────────────────────────────
+  function shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+  }
+
+  // ── Relative time ──────────────────────────────────────────────────────
+  function relativeTime(ts) {
+    if (!ts) return '';
+    const now = Math.floor(Date.now() / 1000);
+    const diff = now - ts;
+    if (diff < 0) return '刚刚';
+    if (diff < 60) return '刚刚';
+    if (diff < 3600) return Math.floor(diff / 60) + '分钟前';
+    if (diff < 86400) return Math.floor(diff / 3600) + '小时前';
+    if (diff < 604800) return Math.floor(diff / 86400) + '天前';
+    if (diff < 2592000) return Math.floor(diff / 604800) + '周前';
+    if (diff < 31536000) return Math.floor(diff / 2592000) + '个月前';
+    return Math.floor(diff / 31536000) + '年前';
+  }
+
+  function formatTime(ts) {
+    if (!ts) return '';
+    const d = new Date(ts * 1000);
+    return d.getFullYear() + '/' + (d.getMonth()+1) + '/' + d.getDate() +
+           ' ' + String(d.getHours()).padStart(2,'0') + ':' +
+           String(d.getMinutes()).padStart(2,'0') + ':' +
+           String(d.getSeconds()).padStart(2,'0');
+  }
+
+  // ── Display name ────────────────────────────────────────────────────────
+  // The TXT data already follows the naming convention (Alice, Bob, Carol, …)
+  // so we use the name directly. "洞主" stays as "洞主".
+  function getDisplayName(comment) {
+    if (!comment) return '洞主';
+    return comment.name;
+  }
+
+  // ── Render number links ────────────────────────────────────────────────
+  function escapeHTML(str) {
+    if (!str) return '';
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function renderTextWithLinks(text) {
+    // Guard: ensure text is a string
+    if (typeof text !== 'string') text = String(text || '');
+    // Escape HTML
+    let escaped = text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+
+    // Replace digit sequences (4+ digits) with clickable links
+    escaped = escaped.replace(/\b(\d{4,})\b/g, (match, num) => {
+      const pid = parseInt(num, 10);
+      if (holeIndex.has(pid)) {
+        return `<span class="num-link" data-pid="${pid}" title="点击查看 #${pid}">${match}</span>`;
+      } else {
+        return `<span class="num-link not-found" data-pid="${pid}" title="未找到 #${pid}">${match}</span>`;
+      }
+    });
+
+    return escaped;
+  }
+
+  // ── Build OP card ─────────────────────────────────────────────────────
+  function buildOpCard(hole) {
+    const card = document.createElement('div');
+    card.className = 'card op-card';
+    card.dataset.pid = hole.pid;
+
+    // Header
+    const header = document.createElement('div');
+    header.className = 'card-header';
+    header.innerHTML = `
+      <div class="card-header-left">
+        <span class="pid-tag">#${hole.pid}</span>
+        <div class="time-info">
+          <span class="time-relative">${relativeTime(hole.timestamp)}</span>
+          <span>${formatTime(hole.timestamp)}</span>
+        </div>
+      </div>
+      <div class="card-header-right">
+        <div class="stat-row">
+          <span class="stat-item">💬 ${hole.reply}</span>
+          <span class="stat-item">⭐ ${hole.likenum}</span>
+        </div>
+        ${hole.tagName ? `<span class="tag-badge">${escapeHTML(hole.tagName)}</span>` : ''}
+      </div>`;
+
+    // Body
+    const body = document.createElement('div');
+    body.className = 'card-body';
+    body.innerHTML = renderTextWithLinks(hole.text);
+
+    // Expand/collapse for long text
+    let expandBtn = null;
+    const textLen = hole.text.length;
+    if (textLen > COLLAPSE_LENGTH) {
+      body.classList.add('collapsed');
+      expandBtn = document.createElement('button');
+      expandBtn.className = 'expand-btn';
+      expandBtn.textContent = '展开全部 ▼';
+      expandBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        body.classList.toggle('collapsed');
+        expandBtn.textContent = body.classList.contains('collapsed') ? '展开全部 ▼' : '收起 ▲';
+      });
+    }
+
+    card.appendChild(header);
+    card.appendChild(body);
+    if (expandBtn) card.appendChild(expandBtn);
+
+    // Images
+    if (hole.hasImage) {
+      const imgWrap = document.createElement('div');
+      imgWrap.className = 'card-images';
+      const img = document.createElement('img');
+      img.src = `${PIC_DIR}/${hole.pid}.jfif`;
+      img.alt = `#${hole.pid} 图片`;
+      img.loading = 'lazy';
+      img.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openLightbox(img.src);
+      });
+      img.onerror = () => { imgWrap.remove(); };
+      imgWrap.appendChild(img);
+      card.appendChild(imgWrap);
+    }
+
+    // Click → open detail panel
+    card.addEventListener('click', () => openDetail(hole.pid));
+    return card;
+  }
+
+  // ── Build comment card ────────────────────────────────────────────────
+  function buildCommentCard(hole, comment, index) {
+    const card = document.createElement('div');
+    card.className = 'card comment-card';
+    card.dataset.pid = hole.pid;
+    card.dataset.commentIdx = index;
+
+    const displayName = getDisplayName(comment);
+
+    // Header
+    const header = document.createElement('div');
+    header.className = 'card-header';
+    const cts = comment.timestamp || hole.timestamp;
+    header.innerHTML = `
+      <span class="comment-id">#${index + 1} ${displayName}</span>
+      <span class="time-info" style="font-size:11px;">
+        <span class="time-relative" style="padding:1px 5px;border-radius:6px;background:#f0e0d6;color:#8b1a1a;font-size:10px;margin-right:4px;">${relativeTime(cts)}</span>
+        ${formatTime(cts)}
+      </span>`;
+
+    // Body
+    const body = document.createElement('div');
+    body.className = 'comment-body';
+    let bodyHTML = '';
+    if (comment.replyTo && comment.replyTo.name) {
+      if (comment.replyTo.text) {
+        bodyHTML += `<div class="reply-quote"><span class="quote-name">↩ ${comment.replyTo.name}</span> <span class="quote-text">${escapeHTML(comment.replyTo.text)}</span></div>`;
+      } else {
+        bodyHTML += `<div class="reply-quote"><span class="quote-name">↩ 回复 ${comment.replyTo.name}</span></div>`;
+      }
+    }
+    bodyHTML += `<span class="comment-speaker">${displayName}:</span>${renderTextWithLinks(comment.text)}`;
+    body.innerHTML = bodyHTML;
+
+    card.appendChild(header);
+    card.appendChild(body);
+
+    card.addEventListener('click', () => openDetail(hole.pid));
+    return card;
+  }
+
+  // ── Build a full treehole row ─────────────────────────────────────────
+  function buildTreeholeRow(hole) {
+    const row = document.createElement('div');
+    row.className = 'treehole-row';
+    row.id = 'hole-' + hole.pid;
+    row.dataset.pid = hole.pid;
+
+    // OP card
+    row.appendChild(buildOpCard(hole));
+
+    // Comment cards wrapped in a scroll strip (for mobile horizontal scroll)
+    const comments = hole.comments || [];
+    const maxShow = Math.min(comments.length, 8);
+    if (maxShow > 0) {
+      const strip = document.createElement('div');
+      strip.className = 'comment-strip';
+      for (let i = 0; i < maxShow; i++) {
+        strip.appendChild(buildCommentCard(hole, comments[i], i));
+      }
+      // If more comments, show a "+N more" indicator
+      if (comments.length > 8) {
+        const moreCard = document.createElement('div');
+        moreCard.className = 'card comment-card';
+        moreCard.style.cssText = 'display:flex;align-items:center;justify-content:center;';
+        moreCard.innerHTML = `<div style="text-align:center;color:#8c8276;font-size:14px;">
+          +${comments.length - 8} 条<br>更多发言</div>`;
+        moreCard.addEventListener('click', () => openDetail(hole.pid));
+        strip.appendChild(moreCard);
+      }
+      row.appendChild(strip);
+    }
+
+    return row;
+  }
+
+  // ── Detail Panel ───────────────────────────────────────────────────────
+  function openDetail(pid) {
+    const hole = holeIndex.get(pid);
+    if (!hole) return;
+
+    selectedPid = pid;
+    detailPanel.classList.remove('hidden');
+    document.getElementById('feed').classList.remove('no-panel');
+    document.body.classList.add('panel-open');
+    panelTitle.textContent = '#' + pid + ' 树洞详情';
+
+    panelPosts.innerHTML = '';
+
+    // OP post
+    const opCard = buildPanelCard(hole, null, -1);
+    panelPosts.appendChild(opCard);
+
+    // Comments
+    const comments = hole.comments || [];
+    comments.forEach((c, i) => {
+      panelPosts.appendChild(buildPanelCard(hole, c, i));
+    });
+
+    // Highlight selected row in feed
+    document.querySelectorAll('.treehole-row').forEach(r => r.classList.remove('selected-row'));
+    const row = document.getElementById('hole-' + pid);
+    if (row) {
+      row.classList.add('selected-row');
+      row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // On mobile, scroll panel to top
+    panelPosts.scrollTop = 0;
+  }
+
+  function buildPanelCard(hole, comment, index) {
+    const card = document.createElement('div');
+    card.className = 'panel-card';
+
+    const isOP = index === -1;
+    const displayName = isOP ? '洞主' : getDisplayName(comment);
+    const text = isOP ? hole.text : comment.text;
+    const replyTo = isOP ? null : comment.replyTo;
+    const ts = isOP ? hole.timestamp : (comment.timestamp || hole.timestamp);
+
+    let headerHTML = `<span class="panel-speaker">`;
+    if (isOP) {
+      headerHTML += `#${hole.pid} 洞主`;
+    } else {
+      headerHTML += `#${index + 1} ${displayName}`;
+    }
+    headerHTML += `</span>
+      <span style="font-size:12px;color:#8c8276;">
+        <span class="time-relative" style="padding:1px 5px;border-radius:6px;background:#f0e0d6;color:#8b1a1a;font-size:10px;margin-right:4px;">${relativeTime(ts)}</span>
+        ${formatTime(ts)}
+      </span>`;
+
+    let bodyHTML = '';
+    if (comment && comment.replyTo && comment.replyTo.name) {
+      if (comment.replyTo.text) {
+        bodyHTML += `<div class="reply-quote"><span class="quote-name">↩ ${comment.replyTo.name}</span> <span class="quote-text">${escapeHTML(comment.replyTo.text)}</span></div>`;
+      } else {
+        bodyHTML += `<div class="reply-quote"><span class="quote-name">↩ 回复 ${comment.replyTo.name}</span></div>`;
+      }
+    }
+    bodyHTML += renderTextWithLinks(text);
+
+    card.innerHTML = `
+      <div class="panel-card-header">${headerHTML}</div>
+      <div class="panel-card-body">${bodyHTML}</div>`;
+
+    // Images for OP
+    if (isOP && hole.hasImage) {
+      const imgDiv = document.createElement('div');
+      imgDiv.className = 'panel-card-images';
+      const img = document.createElement('img');
+      img.src = `${PIC_DIR}/${hole.pid}.jfif`;
+      img.alt = `#${hole.pid} 图片`;
+      img.loading = 'lazy';
+      img.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openLightbox(img.src);
+      });
+      img.onerror = () => { imgDiv.remove(); };
+      imgDiv.appendChild(img);
+      card.appendChild(imgDiv);
+    }
+
+    // Click → scroll to that hole in feed
+    card.addEventListener('click', () => {
+      const row = document.getElementById('hole-' + hole.pid);
+      if (row) {
+        row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      openDetail(hole.pid);
+    });
+
+    return card;
+  }
+
+  // Event delegation for number links in panel
+  panelPosts.addEventListener('click', (e) => {
+    const numLink = e.target.closest('.num-link');
+    if (numLink) {
+      e.stopPropagation();
+      const targetPid = parseInt(numLink.dataset.pid, 10);
+      if (holeIndex.has(targetPid)) {
+        openDetail(targetPid);
+      }
+    }
+  });
+
+  function closeDetail() {
+    selectedPid = null;
+    detailPanel.classList.add('hidden');
+    document.getElementById('feed').classList.add('no-panel');
+    document.body.classList.remove('panel-open');
+    panelPosts.innerHTML = '<div class="panel-empty">点击卡片查看树洞详情</div>';
+  }
+
+  document.getElementById('panelClose').addEventListener('click', closeDetail);
+
+  // ── Lightbox ───────────────────────────────────────────────────────────
+  function openLightbox(src) {
+    lightboxImg.src = src;
+    lightbox.style.display = 'flex';
+  }
+
+  function closeLightbox() {
+    lightbox.style.display = 'none';
+    lightboxImg.src = '';
+  }
+
+  lightbox.addEventListener('click', closeLightbox);
+  document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      if (lightbox.style.display === 'flex') closeLightbox();
+    }
+  });
+
+
+  // ── Search ─────────────────────────────────────────────────────────────
+  function doSearch() {
+    const query = searchInput.value.trim();
+    displayCount = 0;
+    feedEl.innerHTML = '';
+    if (!query) {
+      // Show all loaded data
+      renderMore();
+      return;
+    }
+    // Check exact PID
+    const exactPid = parseInt(query, 10);
+    if (!isNaN(exactPid) && holeIndex.has(exactPid)) {
+      displayCount = 1;
+      feedEl.appendChild(buildTreeholeRow(holeIndex.get(exactPid)));
+      resultCount.textContent = '找到 1 / ' + data.length + ' 个树洞';
+      return;
+    }
+    // Keyword search in loaded data
+    const keywords = query.split(/\s+/).filter(Boolean);
+    const results = data.filter(h => {
+      const t = (h.text + ' ' + (h.comments || []).map(c => c.text).join(' ')).toLowerCase();
+      return keywords.every(kw => t.includes(kw.toLowerCase()));
+    });
+    resultCount.textContent = results.length === data.length
+      ? '搜索已加载的 ' + data.length + ' 个树洞'
+      : '找到 ' + results.length + ' / ' + data.length + ' 个树洞';
+    if (results.length === 0) {
+      feedEl.innerHTML = '<div class="panel-empty" style="padding:60px 20px;">🔍 未找到匹配的树洞（在已加载的 ' + data.length + ' 条中）</div>';
+      return;
+    }
+    const fragment = document.createDocumentFragment();
+    for (const h of results) fragment.appendChild(buildTreeholeRow(h));
+    feedEl.appendChild(fragment);
+    displayCount = results.length;
+  }
+
+  searchInput.addEventListener('input', debounce(doSearch, 300));
+
+  function debounce(fn, ms) {
+    let timer;
+    return function(...args) {
+      clearTimeout(timer);
+      timer = setTimeout(() => fn.apply(this, args), ms);
+    };
+  }
+
+  // ── Render feed ────────────────────────────────────────────────────────
+  function renderMore() {
+    if (loadingMore) return;
+    const start = displayCount;
+    const end = Math.min(start + DISPLAY_BATCH, data.length);
+    if (start >= data.length) { updateSentinel(); return; }
+    const fragment = document.createDocumentFragment();
+    for (let i = start; i < end; i++) fragment.appendChild(buildTreeholeRow(data[i]));
+    feedEl.appendChild(fragment);
+    displayCount = end;
+    updateSentinel();
+  }
+
+  // ── Event delegation ───────────────────────────────────────────────────
+  feedEl.addEventListener('click', (e) => {
+    const numLink = e.target.closest('.num-link');
+    if (numLink) { e.stopPropagation(); const pid = parseInt(numLink.dataset.pid, 10); if (holeIndex.has(pid)) openDetail(pid); }
+  });
+
+  // ── Infinite Scroll ────────────────────────────────────────────────────
+  const scrollObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !loadingMore) renderMore();
+    });
+  }, { rootMargin: '400px' });
+
+  function updateSentinel() {
+    const old = document.getElementById('sentinel');
+    if (old) { scrollObserver.unobserve(old); old.remove(); }
+    if (displayCount >= data.length) {
+      const done = document.createElement('div');
+      done.className = 'loading-indicator';
+      done.textContent = '— 已显示全部 ' + data.length + ' 个树洞 —';
+      feedEl.appendChild(done);
+      return;
+    }
+    const sentinel = document.createElement('div');
+    sentinel.className = 'loading-indicator';
+    sentinel.id = 'sentinel';
+    sentinel.innerHTML = '<span class="spinner"></span>加载更多… (' + displayCount + '/' + data.length + ')';
+    feedEl.appendChild(sentinel);
+    scrollObserver.observe(sentinel);
+  }
+
+  // ── Init ───────────────────────────────────────────────────────────────
+  function init() {
+    if (!data.length) {
+      feedEl.innerHTML = '<div class="panel-empty" style="padding:60px 20px;"><h2>⚠️ 数据加载失败</h2><p style="margin-top:12px;">请确保 <code>fake-data.js</code> 存在于同一目录下。</p></div>';
+      return;
+    }
+    resultCount.textContent = '共 ' + data.length + ' 个树洞';
+    renderMore();
+
+    // Logo click → scroll to top and reset
+    document.getElementById('headerTitle').addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      searchInput.value = '';
+      displayCount = 0;
+      feedEl.innerHTML = '';
+      closeDetail();
+      renderMore();
+    });
+
+    // 🔄 button — shuffle data and re-render
+    document.getElementById('rebuildBtn').addEventListener('click', () => {
+      const btn = document.getElementById('rebuildBtn');
+      btn.classList.add('spinning');
+      setTimeout(() => {
+        shuffle(data);
+        // Rebuild index
+        holeIndex.clear(); for (const h of data) holeIndex.set(h.pid, h);
+        displayCount = 0;
+        feedEl.innerHTML = '';
+        closeDetail();
+        renderMore();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        btn.classList.remove('spinning');
+        resultCount.textContent = '共 ' + data.length + ' 个树洞（已刷新）';
+      }, 300);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (lightbox.style.display === 'flex') closeLightbox();
+        else if (!detailPanel.classList.contains('hidden')) closeDetail();
+      }
+    });
+  }
+
+  init();
+
+})();
+</script>
+
+</body>
+</html>
