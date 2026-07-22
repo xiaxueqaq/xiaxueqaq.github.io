@@ -426,6 +426,30 @@ body {
   font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
 }
 
+.comment-card .comment-body.collapsed {
+  max-height: 136px;
+  overflow: hidden;
+  position: relative;
+}
+
+.comment-card .comment-body.collapsed::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 36px;
+  background: linear-gradient(transparent, var(--box-bgcolor-light, #fffdf9));
+}
+
+.comment-card .comment-fade-label {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 10px; cursor: pointer; padding: 1px 12px 6px;
+  background: var(--box-bgcolor-light, #fffdf9); border-bottom-left-radius: var(--radius);
+  border-bottom-right-radius: var(--radius);
+}
+.comment-card .cf-dots { color: #c0b8a8; }
+.comment-card .cf-hint { color: #aaa090; }
+.comment-card .comment-fade-label:hover .cf-hint { color: #6b4423; }
+
 .comment-card .comment-speaker {
   font-weight: 600;
   color: #6b4423;
@@ -779,6 +803,7 @@ body {
   .comment-card .card-header { padding: 6px 8px 4px; }
   .comment-card .comment-id { font-size: 12px; }
   .comment-card .comment-body { font-size: 12.5px; padding: 6px 8px 8px; }
+  .comment-card .comment-body.collapsed { max-height: 120px; }
 
   /* ── Detail panel — full-screen overlay from bottom ───────────────── */
   .panel-handle {
@@ -1201,6 +1226,21 @@ body {
 
     card.appendChild(header);
     card.appendChild(body);
+
+    // Fold long comment bodies
+    requestAnimationFrame(function () {
+      if (body.scrollHeight > 130) {
+        body.classList.add('collapsed');
+        var fadeLabel = document.createElement('span');
+        fadeLabel.className = 'comment-fade-label';
+        fadeLabel.innerHTML = '<span class="cf-dots">......</span><span class="cf-hint">(查看完整评论)</span>';
+        fadeLabel.addEventListener('click', function (e) {
+          e.stopPropagation();
+          openDetail(hole.pid);
+        });
+        card.appendChild(fadeLabel);
+      }
+    });
 
     card.addEventListener('click', () => openDetail(hole.pid));
     return card;
