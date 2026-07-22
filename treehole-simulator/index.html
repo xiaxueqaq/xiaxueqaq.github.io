@@ -1123,25 +1123,25 @@ body {
     body.className = 'card-body';
     body.innerHTML = renderTextWithLinks(hole.text);
 
-    // Expand/collapse for long text
-    let expandBtn = null;
-    const textLen = hole.text.length;
-    if (textLen > COLLAPSE_LENGTH) {
-      body.classList.add('collapsed');
-      expandBtn = document.createElement('button');
-      expandBtn.className = 'expand-btn';
-      expandBtn.textContent = '展开全部 ▼';
-      expandBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        body.classList.toggle('collapsed');
-        expandBtn.textContent = body.classList.contains('collapsed') ? '展开全部 ▼' : '收起 ▲';
-      });
-    }
-
+    // Expand/collapse based on rendered height
     card.appendChild(header);
     card.appendChild(body);
-    if (expandBtn) card.appendChild(expandBtn);
-
+    body.classList.add('collapsed');
+    requestAnimationFrame(function () {
+      if (body.scrollHeight > body.clientHeight + 2) {
+        var expandBtn = document.createElement('button');
+        expandBtn.className = 'expand-btn';
+        expandBtn.textContent = '展开全部 ▼';
+        expandBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          body.classList.toggle('collapsed');
+          expandBtn.textContent = body.classList.contains('collapsed') ? '展开全部 ▼' : '收起 ▲';
+        });
+        card.appendChild(expandBtn);
+      } else {
+        body.classList.remove('collapsed');
+      }
+    });
     // Images
     if (hole.hasImage) {
       const imgWrap = document.createElement('div');
